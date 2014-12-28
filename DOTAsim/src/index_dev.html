@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Example App</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, target-densityDpi=device-dpi">
+
+    <link href="../../common/css/ui/uicommon.css" rel="stylesheet"/>
+    <link href="../../common/css/ui/widgetcommon.css" rel="stylesheet"/>
+    <link href="../../common/css/fontscommon.css" rel="stylesheet"/>
+
+    <!-- dummy goog object -->
+    <script type="text/javascript" src="../../common/js/org/goog/dummy_goog.js"></script>
+
+    <!-- 3rd party lib -->
+    <script type="text/javascript" src="../../common/js/org/puremvc/puremvc-1.0.js"></script>
+    <script type="text/javascript" src="../../common/js/org/createjs/easeljs/easeljs-0.7.1.min.js"></script>
+    <script type="text/javascript" src="../../common/js/org/createjs/tweenjs/tweenjs-0.5.1.min.js"></script>
+    <script type="text/javascript" src="../../common/js/org/jsv/jsv.js"></script>
+    <script type="text/javascript" src="../../common/js/org/underscore/_.js"></script>
+
+    <!-- lib source -->
+    <script type="text/javascript" src="../../common/js/BOK.js"></script>
+    <script type="text/javascript" src="../../common/js/event/Event.js"></script>
+    <script type="text/javascript" src="../../common/js/Delegate.js"></script>
+    <script type="text/javascript" src="../../common/js/EventDispatcher.js"></script>
+    <script type="text/javascript" src="../../common/js/easelui/EsUIComponent.js"></script>
+    <script type="text/javascript" src="../../common/js/easelui/EsButton.js"></script>
+    <script type="text/javascript" src="../../common/js/easelui/SosaIcon.js"></script>
+    <script type="text/javascript" src="../../common/js/easelui/EsPanel.js"></script>
+    <script type="text/javascript" src="../../common/js/util/EaselAnimationHelper.js"></script>
+    <script type="text/javascript" src="../../common/js/util/BOK2DGeo.js"></script>
+
+    <script type="text/javascript" src="../../common/js/framework/util/frameworkUtil.js"></script>
+    <script type="text/javascript" src="../../common/js/framework/core/BaseProxy.js"></script>
+    <script type="text/javascript" src="../../common/js/framework/core/BaseMediator.js"></script>
+    <script type="text/javascript" src="../../common/js/framework/core/BaseCommand.js"></script>
+    <script type="text/javascript" src="../../common/js/framework/core/FeatureNotesCollection.js"></script>
+    <script type="text/javascript" src="../../common/js/framework/core/MVCFeature.js"></script>
+    <script type="text/javascript" src="../../common/js/framework/App.js"></script>
+
+    <!-- common features -->
+    <script type="text/javascript" src="../../common/js/features/gamesave/c/QuickLoadCMD.js"></script>
+    <script type="text/javascript" src="../../common/js/features/gamesave/c/QuickSaveCMD.js"></script>
+    <script type="text/javascript" src="../../common/js/features/gamesave/c/SaveGameCMD.js"></script>
+    <script type="text/javascript" src="../../common/js/features/gamesave/c/LoadGameCMD.js"></script>
+    <script type="text/javascript" src="../../common/js/features/gamesave/c/RegSlotSchemaCMD.js"></script>
+    <script type="text/javascript" src="../../common/js/features/gamesave/m/LocalSaveProxy.js"></script>
+    <script type="text/javascript" src="../../common/js/features/gamesave/GameSaveFeatureNotes.js"></script>
+    <script type="text/javascript" src="../../common/js/features/gamesave/GameSaveFeature.js"></script>
+
+    <!-- common apps -->
+    <script type="text/javascript" src="../../common/js/apps/splashscreen/SplashScreenApp.js"></script>
+    <script type="text/javascript" src="../../common/js/apps/preloader/interfaces/IPreloaderSkin.js"></script>
+    <script type="text/javascript" src="../../common/js/apps/preloader/components/DefaultCanvasSkin.js"></script>
+    <script type="text/javascript" src="../../common/js/apps/preloader/loader/AbstractLoader.js"></script>
+    <script type="text/javascript" src="../../common/js/apps/preloader/loader/TemplateLoader.js"></script>
+    <script type="text/javascript" src="../../common/js/apps/preloader/loader/AssetsLoader.js"></script>
+    <script type="text/javascript" src="../../common/js/apps/preloader/loader/FontLoader.js"></script>
+    <script type="text/javascript" src="../../common/js/apps/preloader/AbstractPreloaderApp.js"></script>
+    <script type="text/javascript" src="../../common/js/apps/preloader/CanvasPreloaderApp.js"></script>
+
+    <!-- game features -->
+    <script type="text/javascript" src="js/features/maingame/m/model/defs.js"></script>
+    <script type="text/javascript" src="js/features/maingame/m/UnitsProxy.js"></script>
+    <script type="text/javascript" src="js/features/maingame/m/PlayerDataProxy.js"></script>
+    <script type="text/javascript" src="js/features/maingame/l/AIMediator.js"></script>
+    <script type="text/javascript" src="js/features/maingame/l/LogicMediator.js"></script>
+    <script type="text/javascript" src="js/features/maingame/l/MapControlMediator.js"></script>
+    <script type="text/javascript" src="js/features/maingame/l/PlayerCommandMediator.js"></script>
+    <script type="text/javascript" src="js/features/maingame/v/components/Unit.js"></script>
+    <script type="text/javascript" src="js/features/maingame/v/components/RangeUnit.js"></script>
+    <script type="text/javascript" src="js/features/maingame/v/components/HeroUnit.js"></script>
+    <script type="text/javascript" src="js/features/maingame/v/components/RangeHeroUnit.js"></script>
+    <script type="text/javascript" src="js/features/maingame/v/UnitsMediator.js"></script>
+    <script type="text/javascript" src="js/features/maingame/c/GameStartCMD.js"></script>
+    <script type="text/javascript" src="js/features/maingame/c/GameFinishedCMD.js"></script>
+    <script type="text/javascript" src="js/features/maingame/c/RequestPlayerDataCMD.js"></script>
+    <script type="text/javascript" src="js/features/maingame/c/RequestHeroDataCMD.js"></script>
+    <script type="text/javascript" src="js/features/maingame/c/PlayerGainGoldCMD.js"></script>
+    <script type="text/javascript" src="js/features/maingame/MainGameFeatureNotes.js"></script>
+    <script type="text/javascript" src="js/features/maingame/MainGameFeature.js"></script>
+
+    <script type="text/javascript" src="js/features/hud/m/GameDataProxy.js"></script>
+    <script type="text/javascript" src="js/features/hud/v/components/HeroIcon.js"></script>
+    <script type="text/javascript" src="js/features/hud/v/components/HeroDeployGrid.js"></script>
+    <script type="text/javascript" src="js/features/hud/v/components/CenterPanel.js"></script>
+    <script type="text/javascript" src="js/features/hud/v/components/SidePanel.js"></script>
+    <script type="text/javascript" src="js/features/hud/v/components/GameHud.js"></script>
+    <script type="text/javascript" src="js/features/hud/v/HudMediator.js"></script>
+    <script type="text/javascript" src="js/features/hud/HudFeatureNotes.js"></script>
+    <script type="text/javascript" src="js/features/hud/HudFeature.js"></script>
+
+    <!-- game apps -->
+    <script type="text/javascript" src="js/DOTASimApp.js"></script>
+
+    <!-- translation -->
+
+    <!-- data load -->
+    <script type="text/javascript" src="assets/data/GameSettings.js"></script>
+    <script type="text/javascript" src="assets/data/setup.js"></script>
+
+    <!-- start-up script -->
+    <script type="text/javascript" src="js/main.js"></script>
+
+</head>
+
+<body style="background-color: black">
+    <div style="position: absolute; left: 50%;">
+        <div id="mainPage" style="width: 640px; height: 480px;background-color: white; left: -50%; position: relative; overflow: hidden;">
+            <canvas id="canvas" width="640" height="480"></canvas>
+        </div>
+    </div>
+</body>
+</html>

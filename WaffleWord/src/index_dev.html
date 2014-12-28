@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="css/reset.css" type="text/css">
+        <link rel="stylesheet" href="css/main.css" type="text/css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+	<meta name="msapplication-tap-highlight" content="no"/>
+
+        <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="js/createjs-2013.09.25.min.js"></script>
+        <script type="text/javascript" src="js/ctl_utils.js"></script>
+        <script type="text/javascript" src="js/sprite_lib.js"></script>
+        <script type="text/javascript" src="js/settings.js"></script>
+        <script type="text/javascript" src="js/CLang.js"></script>
+        <script type="text/javascript" src="js/CPreloader.js"></script>
+        <script type="text/javascript" src="js/CMain.js"></script>
+        <script type="text/javascript" src="js/CMenu.js"></script>
+        <script type="text/javascript" src="js/CTextButton.js"></script>
+        <script type="text/javascript" src="js/CToggle.js"></script>
+        <script type="text/javascript" src="js/CGfxButton.js"></script>
+        <script type="text/javascript" src="js/CGame.js"></script>
+        <script type="text/javascript" src="js/CInterface.js"></script>
+        <script type="text/javascript" src="js/CEndPanel.js"></script>  
+        <script type="text/javascript" src="js/CLanguageSelection.js"></script>
+        <script type="text/javascript" src="js/CEngWordlist.js"></script>
+        <script type="text/javascript" src="js/CFraWordlist.js"></script>
+        <script type="text/javascript" src="js/CGerWordlist.js"></script>
+        <script type="text/javascript" src="js/CItaWordlist.js"></script>
+        <script type="text/javascript" src="js/CSpaWordlist.js"></script>
+        <script type="text/javascript" src="js/CPorWordlist.js"></script>
+        <script type="text/javascript" src="js/CCell.js"></script>
+        <script type="text/javascript" src="js/CTimeBar.js"></script>
+        <script type="text/javascript" src="js/CHelpPanel.js"></script>
+
+        <!-- dummy goog object -->
+        <script type="text/javascript" src="../../common/js/org/goog/dummy_goog.js"></script>
+
+        <!-- lib source -->
+        <script type="text/javascript" src="../../common/js/BOK.js"></script>
+        <script type="text/javascript" src="../../common/js/event/Event.js"></script>
+        <script type="text/javascript" src="../../common/js/Delegate.js"></script>
+        <script type="text/javascript" src="../../common/js/EventDispatcher.js"></script>
+        <script type="text/javascript" src="../../common/js/SingletonBase.js"></script>
+
+        <script type="text/javascript" src="../../common/js/net/DecoratedSocketController.js"></script>
+        <script type="text/javascript" src="js/net/GameSocketController.js"></script>
+        <script type="text/javascript" src="assets/config/config.js"></script>
+
+        <!-- 3rd party lib -->
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    </head>
+    <body ondragstart="return false;" ondrop="return false;" >
+    <script>
+        var sp = document.createElement('script');
+        sp.src = 'http://dry-shore-8822.herokuapp.com/socket.io/socket.io.js';
+        document.body.appendChild(sp);
+        sp.onload = function(){console.log('script loaded')};
+
+    </script>
+          <script>
+            $(document).ready(function(){
+                console.log('doc ready');
+                     var oMain = new CMain({
+                                            time_level:12000,  //LEVEL TIME IN MILLISECONDS
+                                            max_char_value: 5 , //MAXIMUM VALUE THAT CAN BE ASSIGNED TO A CHAR
+                                            score_wrong:-10    //AMOUNT TO DECREASE FOR WRONG WORD
+                                           });
+                                           
+                                           var date = new  Date();
+                console.log(date);
+                     $(oMain).on("game_start", function(evt) {
+                             console.log('High score: '+localStorage.waffBestScore);
+                     });
+
+                     $(oMain).on("save_score", function(evt,iScore) {
+                         localStorage.waffBestScore = iScore;
+                         var guestInfo;
+                         var guestID = window.localStorage.getItem('guestID');
+                         $.post(appConfig.restUrl + 'guestInfo', { id: guestID }, function(response){
+                             if(response) {
+                                 response.id = guestID;
+                                 guestInfo = response;
+                             }
+                         });
+                         $.ajax({
+                             url: appConfig.rankServer + 'rank/submit',
+                             type: "post",
+                             data: {uId: (Math.ceil(Math.random()*1000) + (new Date()).getTime()),uName:(appConfig.hudAPI ?appConfig.hudAPI.getUserName():"Guest Player"+(Math.ceil(Math.random()*1000))), gameType: appConfig.gameType, score: iScore},
+                             dataType: "json",
+                             async: false,
+                             //timeout: 30000, //超时时间：30秒
+                             success: function(response) {
+                                 console.log("apply score success");
+                             },
+                             error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                 console.log("apply score error");
+                             }
+                         });
+                     });
+
+                     $(oMain).on("restart", function(evt) {
+                             //alert("restart");
+                     });
+           });
+
+        </script>
+        <canvas id="canvas" class='ani_hack' width="1024" height="768"> </canvas>
+
+    </body>
+</html>
